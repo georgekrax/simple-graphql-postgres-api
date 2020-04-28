@@ -1,0 +1,37 @@
+{
+  "name": "simple_graphql_postgres_api",
+  "version": "1.0.0",
+  "description": "A simple GraphQL API built with Node.js and the Express.js framework. For the database PostgreSQL is used, with the pg-promise library.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/georgekrax/simple-graphql-postgres-api.git"
+  },
+  "keywords": [
+    "graphql",
+    "api",
+    "express",
+    "express-graphql",
+    "pg",
+    "postgresql"
+  ],
+  "author": "George Krachtopoulos",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/georgekrax/simple-graphql-postgres-api/issues"
+  },
+  "homepage": "https://github.com/georgekrax/simple-graphql-postgres-api#readme",
+  "dependencies": {
+    "babel": "^6.23.0",
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "express-graphql": "^0.9.0",
+    "graphql": "^15.0.0",
+    "pg": "^8.0.3",
+    "pg-hstore": "^2.3.3",
+    "sequelize": "^5.21.7"
+  }
+}
