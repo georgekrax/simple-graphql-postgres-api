@@ -44,17 +44,13 @@ $  psql -f db.psql
 $  psql -f sample_data.psql
 ```
 
-5. Go ahead and config accordingl the `config.json`, which is going to be responsible for storing valuable and sensitive data for accessing the database. Please complete the file like this:
-```json
-{
-  "development": {
-    "username": "<your_database_username>",
-    "password": "<your_database_password>",
-    "database": "<your_database_name>",
-    "host": "127.0.0.1", // or "localhost"
-    "dialect": "postgres"
-  }
-}
+5. Go ahead and config accordingl the `.env`, which is going to be responsible for storing valuable and sensitive data for accessing the database. Please complete the file like this:
+```shell
+DB_USERNAME=<your_database_username>
+DB_PASSWORD=<your_database_password>
+DB_NAME=<your_database_name>
+DB_HOST="127.0.0.1" // or "localhost"
+DB_PORT=5432
 ```
 6. Run the GraphQL API server, by one of the following ways:
 ```bash
