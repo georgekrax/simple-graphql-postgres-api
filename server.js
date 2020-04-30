@@ -105,7 +105,7 @@ async function getHotelOwners() {
 
 async function getLocations() {
   try {
-    const locations = await db.any("SELECT * FROM locations");
+    const locations = await db.any("SELECT * FROM hotels_locations");
     return locations;
   } catch (e) {
     console.log(e);
