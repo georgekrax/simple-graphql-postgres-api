@@ -68,6 +68,50 @@ async function getReviews() {
   }
 }
 
+async function getHotelLocation(id) {
+  try {
+    const location = await db.any(
+      "SELECT * FROM hotels_locations WHERE hotels_locations.id = (SELECT location FROM hotels WHERE hotels.id = $1)",
+      [id]
+    );
+    console.log(location);
+    return location;
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+async function getHotelOwner(id) {
+  try {
+    const owner = await db.any(
+      "SELECT * FROM owners WHERE owners.id = (SELECT owner_id FROM hotels WHERE hotels.id = $1)",
+      [id]
+    );
+    console.log(owner);
+    return owner;
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+async function getHotelOwners() {
+  try {
+    const owners = await db.any("SELECT * FROM owners");
+    return owners;
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+async function getLocations() {
+  try {
+    const locations = await db.any("SELECT * FROM locations");
+    return locations;
+  } catch (e) {
+    console.log(e);
+  }
+}
+
 const HotelType = new GraphQLObjectType({
   name: "Hotel",
   description: "This represents all available hotel",
@@ -79,10 +123,39 @@ const HotelType = new GraphQLObjectType({
     avg_rating: { type: GraphQLFloat },
     updated_at: { type: new GraphQLNonNull(GraphQLDateTime) },
     timestamp: { type: new GraphQLNonNull(GraphQLDateTime) },
+    location: {
+      type: new GraphQLNonNull(new GraphQLList(LocationType)),
+      resolve: (hotel) => getHotelLocation(hotel.id),
+    },
     reviews: {
       type: new GraphQLList(ReviewType),
       resolve: (hotel) => getReviewsByID(hotel.id),
     },
+    owner: {
+      type: new GraphQLNonNull(new GraphQLList(OwnerType)),
+      resolve: (hotel) => getHotelOwner(hotel.id),
+    },
+  }),
+});
+
+const OwnerType = new GraphQLObjectType({
+  name: "Hotel_owner",
+  description: "This represents the owner of a hotel",
+  fields: () => ({
+    id: { type: new GraphQLNonNull(GraphQLInt) },
+    first_name: { type: new GraphQLNonNull(GraphQLString) },
+    last_name: { type: new GraphQLNonNull(GraphQLString) },
+  }),
+});
+
+const LocationType = new GraphQLObjectType({
+  name: "Hotel_location",
+  description: "This represents a location of a hotel",
+  fields: () => ({
+    id: { type: new GraphQLNonNull(GraphQLInt) },
+    address: { type: new GraphQLNonNull(GraphQLString) },
+    city: { type: new GraphQLNonNull(GraphQLString) },
+    area: { type: GraphQLString },
   }),
 });
 
@@ -113,6 +186,16 @@ const RoutQueryType = new GraphQLObjectType({
       type: new GraphQLList(ReviewType),
       description: "List of reviews",
       resolve: () => getReviews(),
+    },
+    locations: {
+      type: new GraphQLList(LocationType),
+      description: "List of locations",
+      resolve: () => getLocations(),
+    },
+    owners: {
+      type: new GraphQLList(OwnerType),
+      description: "List of hotel owners",
+      resolve: () => getHotelOwners(),
     },
   }),
 });
