@@ -88,7 +88,7 @@ $  npm run start
 
 #### Retrive all available hotels
 
------
+---
 
 ```graphql
 query {
@@ -236,9 +236,50 @@ Response:
 }
 ```
 
+#### Retrieve a single hotel
+
+---
+
+Reuqest arguments:
+* **id:** Int!
+
+```graphql
+query {
+  hotel(id: 1) {
+    id
+    name
+    category
+    price
+    avg_rating
+    updated_at
+    timestamp
+  }
+}
+```
+
+Response:
+
+```json
+{
+  "data": {
+    "hotel": [
+      {
+        "id": 1,
+        "name": "Cassandra Hotel",
+        "category": "Hotel",
+        "price": 12,
+        "avg_rating": 3.2,
+        "updated_at": "2020-04-28T10:30:22.267Z",
+        "timestamp": "2020-04-28T10:30:17.603Z"
+      }
+    ]
+  }
+}
+```
+
 #### Retrive all hotel reviews
 
------
+---
 
 ```graphql
 query {
@@ -337,7 +378,7 @@ Response:
 
 #### Retrieve all hotel locations
 
------
+---
 
 ```graphql
 query {
@@ -369,7 +410,7 @@ Response:
 
 #### Retrieve all hotel owners
 
------
+---
 
 ```graphql
 query {

@@ -173,10 +173,28 @@ const ReviewType = new GraphQLObjectType({
   }),
 });
 
+async function getSpecificHotel(id) {
+  try {
+    const hotel = await db.query("SELECT * FROM hotels WHERE hotels.id = $1", [
+      id,
+    ]);
+    console.log(hotel);
+    return hotel;
+  } catch (e) {}
+}
+
 const RoutQueryType = new GraphQLObjectType({
   name: "Query",
   description: "Root Query",
   fields: () => ({
+    hotel: {
+      type: new GraphQLList(HotelType),
+      description: "A single hotel",
+      args: {
+        id: { type: GraphQLInt },
+      },
+      resolve: (_, args) => getSpecificHotel(args.id),
+    },
     hotels: {
       type: new GraphQLList(HotelType),
       description: "List of hotels",
